@@ -1,0 +1,15 @@
+FROM centos:7
+MAINTAINER micoflores <qjmaflores@tip.edu.ph>
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN yum update -y && \
+    yum install -y httpd php mariadb-server && \
+    yum clean all
+
+RUN systemctl start httpd && \
+    systemctl enable httpd && \
+    systemctl start mariadb && \
+    systemctl enable mariadb
+
+ENTRYPOINT apachectl -D FOREGROUND
